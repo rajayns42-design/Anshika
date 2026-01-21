@@ -26,6 +26,49 @@ UPI_ID = os.getenv("UPI_ID")
 
 # ---------------- CLIENT ----------------
 app = Client("ai_chatbot")
+# ================== PRIVATE CHAT AUTO REPLY ==================
+@app.on_message(filters.text & ~filters.command)
+async def private_reply(client, message):
+    if message.chat.type != ChatType.PRIVATE:
+        return
+
+    await client.send_chat_action(message.chat.id, ChatAction.TYPING)
+    await asyncio.sleep(1)
+
+    reply = girlfriend_reply(message.text)
+    await message.reply_text(reply)
+
+# ================== GROUP CHAT AUTO REPLY ==================
+@app.on_message(filters.text & ~filters.command)
+async def group_reply(client, message):
+    if message.chat.type == ChatType.PRIVATE:
+        return
+
+    bot = await client.get_me()
+    text = message.text.lower()
+
+    should_reply = False
+
+    # bot ko reply
+    if message.reply_to_message and message.reply_to_message.from_user.id == bot.id:
+        should_reply = True
+
+    # bot mention
+    elif bot.username and f"@{bot.username.lower()}" in text:
+        should_reply = True
+
+    # naam se bulao
+    elif any(w in text for w in ["disha", "baby", "jaan", "shehzada"]):
+        should_reply = True
+
+    if not should_reply:
+        return
+
+    await client.send_chat_action(message.chat.id, ChatAction.TYPING)
+    await asyncio.sleep(1)
+
+    reply = girlfriend_reply(message.text)
+    await message.reply_text(reply)
 
 # ---------------- DB ----------------
 chatbot_collection = None
