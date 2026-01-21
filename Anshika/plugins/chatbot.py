@@ -53,7 +53,7 @@ if MONGO_URL:
 
 # ---------------- CONFIG ----------------
 MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions"
-MODEL = "mistral-small-latest"
+MODEL = "mistral-free-latest"
 MAX_HISTORY = 10
 SPAM_LIMIT = 6
 SPAM_WINDOW = 10
@@ -126,6 +126,22 @@ ROMANTIC_WISH = [
     "Tumhari aadat ho gayi hai mujhe 🥺❤️",
     "Aaj tumhe zyada miss kar rahi hoon 💖"
 ]
+
+# ---------------- HELPERS ----------------
+def now_ts():
+    return int(time.time())
+
+def get_all_wish():
+    h = datetime.now().hour
+
+    if 5 <= h <= 11:
+        return random.choice(GOOD_MORNING)
+
+    if h >= 22 or h <= 2:
+        return random.choice(GOOD_NIGHT)
+
+    # din ke baaki time me normal + love mix
+    return random.choice(NORMAL_WISH + LOVE_WISH)
 NSFW_PATTERN = re.compile(r"\b(sex|nude|boobs|dick|pussy|lund|chut|fuck|fap|horny|porn|kiss me|bed pe|sax)\b", re.I)
 ABUSE_PATTERN = re.compile(r"\b(madarchod|bhenchod|bc|mc|chutiya|harami|saala|kutte|gandu|fuck you|idiot|bitch)\b", re.I)
 
