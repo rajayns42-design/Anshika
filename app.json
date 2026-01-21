@@ -3,7 +3,7 @@
   "description": "The Ultimate Aesthetic Telegram Economy & Game Bot.",
   "logo": "https://telegra.ph/file/5e5480760e412bd402e88.jpg",
   "keywords": [
-    "telegram", "bot", "python", "economy", "game", "ai"
+    "telegram", "bot", "python", "love", "game", "ai"
   ],
   "repository": "https://github.com/YourUsername/RyanBakaBot",
   "env": {
@@ -30,3 +30,4 @@
   ],
   "stack": "container"
 }
+Payogram convert fast
